@@ -78,7 +78,7 @@
   padding: 0% 4% 0% 4%;
 }
 
-.submit-button:hover{
+.submit-button:hover:enabled{
   background-color: #0b46b8;
 }
 

@@ -6,27 +6,20 @@ import { DialogContent } from "@mui/material";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const CertificateUpload = (props) => {
-  const [submitButtonDisabled,setSubmitButtonDisabled]=useState(true)
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const fileInput = useRef(null);
 
-  useEffect(()=>{
-    if(selectedFiles.length>0){
+  useEffect(() => {
+    if (selectedFiles.length === 0 || isLoading) {
+      setSubmitButtonDisabled(true);
+    } else {
       setSubmitButtonDisabled(false);
     }
-    else{
-      setSubmitButtonDisabled(true);
-    }
-  },[selectedFiles])
+  }, [selectedFiles,isLoading]);
   const handleFileChange = (event) => {
     setSelectedFiles([...selectedFiles, ...event.target.files]);
-    if(selectedFiles.length>0){
-      setSubmitButtonDisabled(false)
-    }
-    if(selectedFiles.length===0){
-      setSubmitButtonDisabled(true);
-    }
   };
 
   const fileDelete = (name) => {
@@ -74,9 +67,9 @@ const CertificateUpload = (props) => {
           <br />
           <br />
           <ol style={{ paddingLeft: "3rem" }}>
-            {selectedFiles.map((file) => (
+            {selectedFiles.map((file,index) => (
               <>
-                <li className="list-item" style={{ listStyleType: "none" }}>
+                <li key={index} className="list-item" style={{ listStyleType: "none" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -104,27 +97,29 @@ const CertificateUpload = (props) => {
             onClick={() => {
               props.handleSubmit();
               setIsLoading(true);
-              console.log(isLoading);
             }}
             disabled={submitButtonDisabled}
           >
             Submit
           </button>
           {isLoading && (
-            <svg
-              width="24"
-              height="25"
-              viewBox="0 0 24 25"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              class="pi-spin rotating"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M10.7061 3.51363C10.7061 2.73396 11.3409 2.09949 12.121 2.09949C12.9011 2.09949 13.5359 2.73396 13.5359 3.51363C13.5359 4.2933 12.9011 4.92777 12.121 4.92777C11.3409 4.92777 10.7061 4.2933 10.7061 3.51363ZM16.2141 5.91262C16.2141 5.01931 16.9373 4.29646 17.8311 4.29646C18.7249 4.29646 19.4481 5.01931 19.4481 5.91262C19.4481 6.80593 18.7249 7.52878 17.8311 7.52878C16.9373 7.52878 16.2141 6.80593 16.2141 5.91262ZM6.4109 4.64999C5.74136 4.64999 5.19814 5.19292 5.19814 5.86211C5.19814 6.53131 5.74136 7.07423 6.4109 7.07423C7.08045 7.07423 7.62367 6.53131 7.62367 5.86211C7.62367 5.19292 7.08045 4.64999 6.4109 4.64999ZM18.3617 11.6197C18.3617 10.6159 19.1765 9.80151 20.1809 9.80151C21.1852 9.80151 22 10.6159 22 11.6197C22 12.6235 21.1852 13.4379 20.1809 13.4379C19.1765 13.4379 18.3617 12.6235 18.3617 11.6197ZM4.01064 10.5591C3.45163 10.5591 3 11.0105 3 11.5692C3 12.1279 3.45163 12.5793 4.01064 12.5793C4.56965 12.5793 5.02128 12.1279 5.02128 11.5692C5.02128 11.0105 4.56965 10.5591 4.01064 10.5591ZM15.7593 17.3268C15.7593 16.2125 16.6657 15.3066 17.7806 15.3066C18.8954 15.3066 19.8019 16.2125 19.8019 17.3268C19.8019 18.441 18.8954 19.347 17.7806 19.347C16.6657 19.347 15.7593 18.441 15.7593 17.3268ZM6.36037 16.4682C5.91506 16.4682 5.55186 16.8312 5.55186 17.2763C5.55186 17.7213 5.91506 18.0843 6.36037 18.0843C6.80568 18.0843 7.16888 17.7213 7.16888 17.2763C7.16888 16.8312 6.80568 16.4682 6.36037 16.4682ZM9.64495 19.6752C9.64495 18.3369 10.7314 17.251 12.0705 17.251C13.4096 17.251 14.496 18.3369 14.496 19.6752C14.496 21.0136 13.4096 22.0995 12.0705 22.0995C10.7314 22.0995 9.64495 21.0136 9.64495 19.6752Z"
-              ></path>
-            </svg>
+            <>&nbsp;&nbsp;
+              <svg
+                width="24"
+                height="25"
+                viewBox="0 0 24 25"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                className="pi-spin rotating"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M10.7061 3.51363C10.7061 2.73396 11.3409 2.09949 12.121 2.09949C12.9011 2.09949 13.5359 2.73396 13.5359 3.51363C13.5359 4.2933 12.9011 4.92777 12.121 4.92777C11.3409 4.92777 10.7061 4.2933 10.7061 3.51363ZM16.2141 5.91262C16.2141 5.01931 16.9373 4.29646 17.8311 4.29646C18.7249 4.29646 19.4481 5.01931 19.4481 5.91262C19.4481 6.80593 18.7249 7.52878 17.8311 7.52878C16.9373 7.52878 16.2141 6.80593 16.2141 5.91262ZM6.4109 4.64999C5.74136 4.64999 5.19814 5.19292 5.19814 5.86211C5.19814 6.53131 5.74136 7.07423 6.4109 7.07423C7.08045 7.07423 7.62367 6.53131 7.62367 5.86211C7.62367 5.19292 7.08045 4.64999 6.4109 4.64999ZM18.3617 11.6197C18.3617 10.6159 19.1765 9.80151 20.1809 9.80151C21.1852 9.80151 22 10.6159 22 11.6197C22 12.6235 21.1852 13.4379 20.1809 13.4379C19.1765 13.4379 18.3617 12.6235 18.3617 11.6197ZM4.01064 10.5591C3.45163 10.5591 3 11.0105 3 11.5692C3 12.1279 3.45163 12.5793 4.01064 12.5793C4.56965 12.5793 5.02128 12.1279 5.02128 11.5692C5.02128 11.0105 4.56965 10.5591 4.01064 10.5591ZM15.7593 17.3268C15.7593 16.2125 16.6657 15.3066 17.7806 15.3066C18.8954 15.3066 19.8019 16.2125 19.8019 17.3268C19.8019 18.441 18.8954 19.347 17.7806 19.347C16.6657 19.347 15.7593 18.441 15.7593 17.3268ZM6.36037 16.4682C5.91506 16.4682 5.55186 16.8312 5.55186 17.2763C5.55186 17.7213 5.91506 18.0843 6.36037 18.0843C6.80568 18.0843 7.16888 17.7213 7.16888 17.2763C7.16888 16.8312 6.80568 16.4682 6.36037 16.4682ZM9.64495 19.6752C9.64495 18.3369 10.7314 17.251 12.0705 17.251C13.4096 17.251 14.496 18.3369 14.496 19.6752C14.496 21.0136 13.4096 22.0995 12.0705 22.0995C10.7314 22.0995 9.64495 21.0136 9.64495 19.6752Z"
+                ></path>
+              </svg>
+              <span>In Progress</span>
+            </>
           )}
         </DialogActions>
       </Dialog>

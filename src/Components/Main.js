@@ -201,6 +201,12 @@ function Main() {
                 IP white listing
               </option>
               <option
+                value="IPRemoval"
+                style={{ backgroundColor: "white", color: "black" }}
+              >
+                Remove IP(s)
+              </option>
+              <option
                 value="LDAP"
                 style={{ backgroundColor: "white", color: "black" }}
               >
@@ -220,6 +226,7 @@ function Main() {
                 onSelect={clearTask}
                 open={open}
                 handleClose={handleClose}
+                handleSubmit={handleSubmit}
                 customerId={customerId}
               />
             )}

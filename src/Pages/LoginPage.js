@@ -8,7 +8,6 @@ const LoginPage = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const handleOnChange = () => {
-    console.log(userName, password);
     if (userName === "saiteja" && password === "1234") {
       navigate("/home");
     }
